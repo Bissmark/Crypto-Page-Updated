@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+td {
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+th {
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: rgb(54, 57, 63);
+}

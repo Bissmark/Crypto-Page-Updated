@@ -70,7 +70,7 @@ function App() {
     }, []);
 
   return (
-    <div>
+    <div className='bg-gray-900 text-white'>
         <h1>coins</h1>
         <Navbar />
         <Routes>
