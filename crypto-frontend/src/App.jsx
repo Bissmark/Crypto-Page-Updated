@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import CoinTable from './components/CoinTable';
 import Navbar from './components/Navbar';
+import CoinPage from './components/CoinPage';
 import * as coinAPI from './services/coins-api'
 import { Routes, Route } from 'react-router-dom'
 import CryptoJS from 'crypto-js';
@@ -74,7 +75,8 @@ function App() {
         <h1>coins</h1>
         <Navbar />
         <Routes>
-            <Route path='/coins' element={<CoinTable coins={coins} />} />
+            <Route path='/' element={<CoinTable coins={coins} />} />
+            <Route path='/:coinName' element={<CoinPage />}/>
         </Routes>
     </div>
   )
