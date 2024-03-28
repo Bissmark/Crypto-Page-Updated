@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { LineChart, Line, Tooltip, YAxis } from 'recharts';
 import { IoIosStarOutline } from "react-icons/io";
 import { IoMdStar } from "react-icons/io";
+import { FaArrowDownLong } from "react-icons/fa6";
+import { FaArrowUpLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
@@ -73,13 +75,39 @@ const CoinTable = ({ searchQuery }) => {
                     <thead className="bg-gray-500 border">
                         <tr>
                             <th><IoIosStarOutline /></th>
-                            <th onClick={handleSort}>Rank</th>
-                            <th onClick={handleSort}>Name</th>
-                            <th onClick={handleSort}>Price</th>
-                            <th onClick={handleSort}>24hr</th>
-                            <th onClick={handleSort}>Volume</th>
-                            <th onClick={handleSort}>Market Cap</th>
-                            <th onClick={handleSort}>Last 7 Days</th>
+                            <th onClick={handleSort}>
+                                <div className="flex items-center">
+                                    <span className="mr-3">Rank</span> {sortOrder.rank === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                </div>
+                            </th>
+                            <th onClick={handleSort}>
+                                <div className="flex items-center">
+                                    <span className="mr-3">Name</span> {sortOrder.name === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                </div>
+                            </th>
+                            <th onClick={handleSort}>
+                                <div className="flex items-center">
+                                    <span className="mr-3">Price</span> {sortOrder.price === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                </div>
+                            </th>
+                            <th onClick={handleSort}>
+                                <div className="flex items-center">
+                                    <span className="mr-3">24hr</span> {sortOrder['24hr'] === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                </div>
+                            </th>
+                            <th onClick={handleSort}>
+                                <div className="flex items-center">
+                                    <span className="mr-3">Volume</span> {sortOrder.volume === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                </div>
+                            </th>
+                            <th onClick={handleSort}>
+                                <div className="flex items-center">
+                                    <span className="mr-3">Market Cap</span> {sortOrder.marketCap === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                </div>
+                            </th>
+                            <th>
+                                Last 7 Days
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
