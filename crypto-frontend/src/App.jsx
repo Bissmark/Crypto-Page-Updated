@@ -2,13 +2,17 @@ import { useState, useEffect } from 'react'
 import CoinTable from './components/CoinTable';
 import Navbar from './components/Navbar';
 import CoinPage from './components/CoinPage';
+import Dashboard from './components/Dashboard';
 import * as coinAPI from './services/coins-api'
 import { Routes, Route } from 'react-router-dom'
 import CryptoJS from 'crypto-js';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import './App.css'
 
+const queryClient = new QueryClient();
+
 function App() {
-    const [coins, setCoins] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     // const generateSignature = (apiKey, nonce) => {
     //     const message = `nonce=${nonce}`;
@@ -55,29 +59,16 @@ function App() {
 //     fetchData();
 //   }, []); // Empty dependency array ensures useEffect runs only once on component mount
 
-    const handleCreateCoin = async (coinData) => {
-        const newcoin = await coinAPI.createCoin(coinData);
-        setCoins([...coins, newcoin]);
-    }
-
-    useEffect(() => {
-        const fetchCoins = async () => {
-            const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true');
-            const data = await response.json();
-            setCoins(data);
-            console.log(data);
-        };
-        fetchCoins();
-    }, []);
-
   return (
-    <div className='bg-gray-900 text-white'>
-        <h1>coins</h1>
-        <Navbar />
-        <Routes>
-            <Route path='/' element={<CoinTable coins={coins} />} />
-            <Route path='/:coinName' element={<CoinPage />}/>
-        </Routes>
+    <div className='bg-gray-900 text-white max-h-full'>
+        <QueryClientProvider client={queryClient}>
+            <Navbar setSearchQuery={setSearchQuery} />
+            <Routes>
+                <Route path='/' element={<CoinTable searchQuery={searchQuery} />} />
+                <Route path='/:coinName' element={<CoinPage />}/>
+                <Route path='/dashboard' element={<Dashboard />} />
+            </Routes>
+        </QueryClientProvider>
     </div>
   )
 }
