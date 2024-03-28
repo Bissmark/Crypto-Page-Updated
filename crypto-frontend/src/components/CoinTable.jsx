@@ -7,6 +7,34 @@ import { FaArrowUpLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    // Convert the string to a number by parsing it
+    const value = parseFloat(payload[0].value);
+
+    // Check if parsing was successful
+    if (!isNaN(value)) {
+      // Format the number with fixed decimal places and locale string
+      const formattedValue = value.toFixed(2).toLocaleString();
+      return (
+        <div className="custom-tooltip">
+          <p className="label">${formattedValue}</p>
+        </div>
+      );
+    } else {
+      // If parsing fails, use the original string
+      return (
+        <div className="custom-tooltip">
+          <p className="label">${payload[0].value}</p>
+        </div>
+      );
+    }
+  }
+
+  return null;
+};
+
+
 const CoinTable = ({ searchQuery }) => {
     const [activeStates, setActiveStates] = useState({});
     const [coinsData, setCoinsData] = useState([]);
@@ -66,8 +94,6 @@ const CoinTable = ({ searchQuery }) => {
         setSortOrder(sortOrderCopy);
         setCoinsData(sortedHeads);
     }
-
-
 
     if (isFetching) return <h1>Loading...</h1>;
 
@@ -159,7 +185,7 @@ const CoinTable = ({ searchQuery }) => {
                                     <td className="">
                                         <LineChart width={300} height={100} data={coin.sparkline_in_7d.price.map(value => ({ "price": value.toFixed(5) }))}>
                                             <Line type="natural" dataKey="price" stroke={priceIncrease ? "#82ca9d" : "red"} dot={false} />
-                                            <Tooltip cursor={false} wrapperStyle={{ outline: 'none' }} />
+                                            <Tooltip content={ <CustomTooltip /> } cursor={false} wrapperStyle={{ outline: 'none' }} />
                                             <YAxis hide={true} domain={['dataMin', 'dataMax']} />
                                         </LineChart>
                                     </td>
