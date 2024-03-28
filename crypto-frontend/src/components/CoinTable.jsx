@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 const CoinTable = ({ searchQuery }) => {
     const [activeStates, setActiveStates] = useState({});
     const [coinsData, setCoinsData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
     const [sortOrder, setSortOrder] = useState({
         rank: 'asc',
         name: 'asc',
@@ -18,6 +19,10 @@ const CoinTable = ({ searchQuery }) => {
         volume: 'asc',
         marketCap: 'asc'
     });
+    const itemsPerPage = 10;
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = coinsData.slice(indexOfFirstItem, indexOfLastItem);
     
     const { isFetching, error, data } = useQuery({
         queryKey: ['coins'],
@@ -129,7 +134,7 @@ const CoinTable = ({ searchQuery }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        { coinsData && coinsData.filter(coin => coin.name.toLowerCase().includes(searchQuery.toLowerCase())).map((coin) => {
+                        { currentItems && currentItems.filter(coin => coin.name.toLowerCase().includes(searchQuery.toLowerCase())).map((coin) => {
                             const priceIncrease = coin.sparkline_in_7d.price[coin.sparkline_in_7d.price.length - 1] > coin.sparkline_in_7d.price[0];
                             const isActive = activeStates[coin.id];
                             
@@ -163,6 +168,10 @@ const CoinTable = ({ searchQuery }) => {
                         })}
                     </tbody>
                 </table>
+                <div>
+                    <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+                    <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(coinsData.length / itemsPerPage)}>Next</button>    
+                </div> 
             </div>
         </div>
     );
