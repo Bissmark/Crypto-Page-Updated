@@ -74,10 +74,10 @@ const CoinTable = ({ searchQuery }) => {
     if (error) return <h1>Error: {error.message}</h1>;
 
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-5">
             <div className="w-full max-w-fit">
                 <table className="border text-center">
-                    <thead className="bg-gray-500 border">
+                    <thead className="border">
                         <tr>
                             <th><IoIosStarOutline /></th>
                             <th>
@@ -168,9 +168,9 @@ const CoinTable = ({ searchQuery }) => {
                         })}
                     </tbody>
                 </table>
-                <div>
-                    <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-                    <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(coinsData.length / itemsPerPage)}>Next</button>    
+                <div className="flex justify-end bg-gray-500 border p-2 pagination">
+                    <button className={`${ currentPage === 1 ? 'opacity-0' : 'opacity-100'} hover:text-blue-500`} onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous Page</button>
+                    <button className={`${ currentPage === 10 ? 'opacity-0' : 'opacity-100'} hover:text-blue-500 ml-5 mr-2`} onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(coinsData.length / itemsPerPage)}>Next Page</button>    
                 </div> 
             </div>
         </div>

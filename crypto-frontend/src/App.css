@@ -12,3 +12,7 @@ th {
     border: 1px solid #ccc;
     background-color: rgb(54, 57, 63);
 }
+
+.pagination {
+    background-color: rgb(54, 57, 63);
+}
