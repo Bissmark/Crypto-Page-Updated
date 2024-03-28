@@ -36,8 +36,7 @@ const CoinTable = ({ searchQuery }) => {
         }
     }, [data]);
 
-    const handleSort = (e) => {
-        const column = e.target.innerText.toLowerCase();
+    const handleSort = (column) => {
         const sortOrderCopy = { ...sortOrder };
 
         // Toggle sort order
@@ -54,7 +53,7 @@ const CoinTable = ({ searchQuery }) => {
                 return sortOrderCopy[column] === 'asc' ? a.price_change_percentage_24h - b.price_change_percentage_24h : b.price_change_percentage_24h - a.price_change_percentage_24h;
             } else if (column === 'volume') {
                 return sortOrderCopy[column] === 'asc' ? a.total_volume - b.total_volume : b.total_volume - a.total_volume;
-            } else if (column === 'market cap') {
+            } else if (column === 'marketCap') {
                 return sortOrderCopy[column] === 'asc' ? a.market_cap - b.market_cap : b.market_cap - a.market_cap;
             }
         });
@@ -62,6 +61,7 @@ const CoinTable = ({ searchQuery }) => {
         setSortOrder(sortOrderCopy);
         setCoinsData(sortedHeads);
     }
+
 
 
     if (isFetching) return <h1>Loading...</h1>;
@@ -75,34 +75,52 @@ const CoinTable = ({ searchQuery }) => {
                     <thead className="bg-gray-500 border">
                         <tr>
                             <th><IoIosStarOutline /></th>
-                            <th onClick={handleSort}>
+                            <th>
                                 <div className="flex items-center">
-                                    <span className="mr-3">Rank</span> {sortOrder.rank === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                    <span className="mr-3">Rank</span>
+                                    <div onClick={() => handleSort('rank')}>
+                                        {sortOrder.rank === 'asc' ? <FaArrowUpLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer"  /> : <FaArrowDownLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer" />}
+                                    </div>
                                 </div>
                             </th>
-                            <th onClick={handleSort}>
+                            <th>
                                 <div className="flex items-center">
-                                    <span className="mr-3">Name</span> {sortOrder.name === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                    <span className="mr-3">Name</span> 
+                                    <div onClick={() => handleSort('name')}>
+                                        {sortOrder.name === 'asc' ? <FaArrowUpLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer" />}
+                                    </div>
                                 </div>
                             </th>
-                            <th onClick={handleSort}>
+                            <th>
                                 <div className="flex items-center">
-                                    <span className="mr-3">Price</span> {sortOrder.price === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                    <span className="mr-3">Price</span> 
+                                    <div onClick={() => handleSort('price')}>
+                                        {sortOrder.price === 'asc' ? <FaArrowUpLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer" />}
+                                    </div>
                                 </div>
                             </th>
-                            <th onClick={handleSort}>
+                            <th>
                                 <div className="flex items-center">
-                                    <span className="mr-3">24hr</span> {sortOrder['24hr'] === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                    <span className="mr-3">24hr</span> 
+                                    <div onClick={() => handleSort('24hr')}>
+                                        {sortOrder['24hr'] === 'asc' ? <FaArrowUpLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer" />}
+                                    </div>
                                 </div>
                             </th>
-                            <th onClick={handleSort}>
+                            <th>
                                 <div className="flex items-center">
-                                    <span className="mr-3">Volume</span> {sortOrder.volume === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                    <span className="mr-3">Volume</span> 
+                                    <div onClick={() => handleSort('volume')}>
+                                        {sortOrder.volume === 'asc' ? <FaArrowUpLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer" />}
+                                    </div>
                                 </div>
                             </th>
-                            <th onClick={handleSort}>
+                            <th>
                                 <div className="flex items-center">
-                                    <span className="mr-3">Market Cap</span> {sortOrder.marketCap === 'asc' ? <FaArrowUpLong className="hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="hover:text-blue-500 cursor-pointer" />}
+                                    <span className="mr-3">Market Cap</span> 
+                                    <div onClick={() => handleSort('marketCap')}>
+                                        {sortOrder.marketCap === 'asc' ? <FaArrowUpLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer" /> : <FaArrowDownLong className="opacity-0 hover:opacity-100 hover:text-blue-500 cursor-pointer" />}
+                                    </div>
                                 </div>
                             </th>
                             <th>
