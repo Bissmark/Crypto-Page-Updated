@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
+import { getUser } from './services/users-service';
 import CoinTable from './components/CoinTable';
 import Navbar from './components/Navbar';
 import CoinPage from './components/CoinPage';
 import Dashboard from './components/Dashboard';
-import * as coinAPI from './services/coins-api'
+import AuthPage from './components/AuthPage';
 import { Routes, Route } from 'react-router-dom'
 import CryptoJS from 'crypto-js';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
@@ -12,6 +13,7 @@ import './App.css'
 const queryClient = new QueryClient();
 
 function App() {
+    const [user, setUser] = useState(getUser());
     const [searchQuery, setSearchQuery] = useState('');
 
     // const generateSignature = (apiKey, nonce) => {
@@ -60,15 +62,19 @@ function App() {
 //   }, []); // Empty dependency array ensures useEffect runs only once on component mount
 
   return (
-    <div className='bg-gray-900 text-white max-h-full'>
-        <QueryClientProvider client={queryClient}>
-            <Navbar setSearchQuery={setSearchQuery} />
-            <Routes>
-                <Route path='/' element={<CoinTable searchQuery={searchQuery} />} />
-                <Route path='/:coinName' element={<CoinPage />}/>
-                <Route path='/dashboard' element={<Dashboard />} />
-            </Routes>
-        </QueryClientProvider>
+    <div className='bg-gray-900 text-white max-h-full h-screen'>
+        { user ?
+            <QueryClientProvider client={queryClient}>
+                <Navbar setSearchQuery={setSearchQuery} setUser={setUser} />
+                <Routes>
+                    <Route path='/' element={<CoinTable searchQuery={searchQuery} />} />
+                    <Route path='/:coinName' element={<CoinPage />}/>
+                    <Route path='/dashboard' element={<Dashboard />} />
+                </Routes>
+            </QueryClientProvider>
+            :
+            <AuthPage setUser={setUser} />
+        }
     </div>
   )
 }

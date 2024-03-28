@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use(logger('dev'));
 app.use(express.json());
 
+app.use('/api/users', require('./routes/users'));
 app.use('/api', require('./routes/coins'));
 
 // We'll respond to any paths we don't recognise by sending
