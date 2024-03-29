@@ -2,11 +2,19 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/user');
 const bcrypt = require('bcrypt');
 
-module.exports = {
-  create,
-  login,
-  checkToken
-};
+const addFavorite = async (req, res) => {
+    console.log(req.body);
+    const { coinId, userId } = req.body;
+    try {
+        const user = await User.findById(userId);
+        user.favorites.push(coinId);
+        await user.save();
+        res.json(user);
+    } catch (error) {
+        console.error('Error adding favorite:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
 
 function checkToken(req, res) {
   res.json(req.exp);
@@ -46,4 +54,11 @@ function createJWT(user) {
     process.env.SECRET,
     { expiresIn: '24h' }
   );
+};
+
+module.exports = {
+    addFavorite,
+    create,
+    login,
+    checkToken,
 };

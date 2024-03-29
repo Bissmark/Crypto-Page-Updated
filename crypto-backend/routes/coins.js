@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const coinsController = require('../controllers/api/coins');
+const usersController = require('../controllers/api/users');
 
 /* GET home page. */
 router.get('/coins', async(req, res) => {
@@ -55,6 +56,7 @@ router.get('/:id', async(req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 router.post('/coins', coinsController.create);
 
 module.exports = router;

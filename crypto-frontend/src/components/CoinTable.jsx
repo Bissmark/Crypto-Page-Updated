@@ -7,8 +7,9 @@ import { FaArrowDownLong } from "react-icons/fa6";
 import { FaArrowUpLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { addFavourite } from "../services/users-service";
 
-const CoinTable = ({ searchQuery }) => {
+const CoinTable = ({ searchQuery, setUser, user }) => {
     const [activeStates, setActiveStates] = useState({});
     const [coinsData, setCoinsData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -24,6 +25,11 @@ const CoinTable = ({ searchQuery }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = coinsData.slice(indexOfFirstItem, indexOfLastItem);
+
+    const addToFavourites = async(coinId) => {
+        await addFavourite(coinId, user._id);
+        //setUser(...favourite, user);
+    }
     
     const { isFetching, error, data } = useQuery({
         queryKey: ['coins'],
@@ -140,7 +146,7 @@ const CoinTable = ({ searchQuery }) => {
                             return (
                                 <tr key={coin.id}>
                                     <td onClick={() => setActiveStates({ ...activeStates, [coin.id]: !isActive })}>
-                                        {isActive ? <IoMdStar className="text-yellow-500" /> : <IoIosStarOutline />}
+                                        {isActive ? <IoMdStar className="text-yellow-500" /> : <IoIosStarOutline onClick={() => addToFavourites(coin.name)} />}
                                     </td>
                                     <td>{coin.market_cap_rank}</td>
                                     <td className="underline hover:text-blue-500 w-28">

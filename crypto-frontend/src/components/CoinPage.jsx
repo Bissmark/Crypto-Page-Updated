@@ -19,13 +19,13 @@ const CoinPage = () => {
         }
     });
 
+    if(isPending) return <h1>Loading...</h1>
+    if(error) return <h1>Error: {error.message}</h1>
+    if (!data) return null;
+
     const min = data.market_data.sparkline_7d.price[0];
     const max = data.market_data.sparkline_7d.price[data.market_data.sparkline_7d.price.length - 1];
     const priceIncrease = max > min ? true : false;
-
-    if(isPending) return <h1>Loading...</h1>
-
-    if(error) return <h1>Error: {error.message}</h1>
     
     return (
         <div className="flex justify-center mt-8 text-xl">
@@ -35,7 +35,7 @@ const CoinPage = () => {
                         <h1 className="text-center text-3xl mr-2">{data.name}</h1>
                         <img src={ data.image.thumb} alt={ data.name } />
                     </div>
-                    <div className="flex justify-evenly mt-8 mb-8">
+                    <div className="flex justify-evenly mt-8 mb-8 leading-10">
                         <div className="mr-8">
                             <p className="text-blue-500">Rank: <span className="text-white">{data.market_cap_rank}</span></p>
                             <p className="text-blue-500">Current Price: <span className="text-white">${data.market_data.current_price.usd.toLocaleString()}</span></p>

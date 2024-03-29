@@ -21,12 +21,12 @@ function App() {
         <div className='bg-gray-900 text-white min-h-screen'>
             { user ?
                     <QueryClientProvider client={queryClient}>
-                        <Navbar setSearchQuery={setSearchQuery} user={user} setUser={setUser} />
+                        <Navbar setSearchQuery={setSearchQuery} user={user} setUser={setUser}/>
                         <div className=''>
                             <Routes>
-                                <Route path='/' element={<CoinTable searchQuery={searchQuery} />} />
+                                <Route path='/' element={<CoinTable searchQuery={searchQuery} setUser={setUser} user={user} />} />
                                 <Route path='/:coinName' element={<CoinPage />}/>
-                                <Route path='/dashboard' element={<Dashboard />} />
+                                <Route path='/dashboard' element={<Dashboard user={user} />} />
                             </Routes>
                         </div>
                     </QueryClientProvider>
