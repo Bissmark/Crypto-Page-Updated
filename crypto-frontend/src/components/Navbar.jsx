@@ -5,6 +5,7 @@ import { FaHome } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
+import { googleLogout } from "@react-oauth/google";
 
 const Navbar = ({ setSearchQuery, user, setUser }) => {
     function handleLogOut() {
@@ -22,7 +23,7 @@ const Navbar = ({ setSearchQuery, user, setUser }) => {
                 { user ?
                     <div>
                         <Link to="/dashboard"><CgProfile className="text-blue-500 hover:text-white" size={30} /></Link>
-                        <Link onClick={handleLogOut}>Logout</Link>
+                        <Link onClick={googleLogout()}>Logout</Link>
                     </div>
                     :
                     <Link to="/login"><CgProfile className="text-blue-500 hover:text-white" size={30} /></Link>

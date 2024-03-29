@@ -20,7 +20,7 @@ const corsOpts = {
 };
 app.use(cors(corsOpts));
 
-app.use(express.static(path.join(__dirname, 'build')));
+// app.use(express.static(path.join(__dirname, 'build')));
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
@@ -46,9 +46,9 @@ app.use('/api', require('./routes/coins'));
 
 // We'll respond to any paths we don't recognise by sending
 // the React index.html.
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+// app.get('/*', function (req, res) {
+//     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// });
 
 const port = process.env.PORT || 3001;
 
