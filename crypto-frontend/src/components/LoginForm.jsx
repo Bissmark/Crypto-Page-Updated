@@ -35,7 +35,7 @@ export default function LoginForm({ setUser, showSignup, setShowSignup }) {
 
     return (
         <IconContext.Provider value={{ color: "white", size: "2.5em" }}>
-            <div className='flex justify-center items-center'>
+            <div className='flex justify-center items-center h-screen'>
                 <div className='w-fit bg-gray-500 p-5 rounded-lg shadow text-center'>
                     <h1 className='my-4 text-5xl font-extrabold dark:text-white'>{showSignup ? 'Sign Up Page' : 'Login Page'}</h1>
                     {/* <Link to='http://localhost:3001/auth/google' className='hover:text-blue-500'>
@@ -60,7 +60,7 @@ export default function LoginForm({ setUser, showSignup, setShowSignup }) {
                             <RiLockPasswordLine />
                             <input className='text-black p-2 w-40 rounded-e-lg' type="password" name="password" value={credentials.password} onChange={handleChange} required placeholder='Password' />
                         </div>
-                        <button className=' text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800' type="submit">LOG IN</button>
+                        <button className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800' type="submit">LOG IN</button>
                     </form>
                     <p className='text-center'>If you actually want to sign up for the website, click <Link onClick={() => setShowSignup(!showSignup)} className='hover:text-blue-500'>here</Link></p>
                 </div>

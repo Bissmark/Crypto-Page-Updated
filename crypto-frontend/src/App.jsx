@@ -17,26 +17,26 @@ function App() {
     const [user, setUser] = useState(getUser());
     const [searchQuery, setSearchQuery] = useState('');
 
-  return (
-    <div className='bg-gray-900 text-white'>
-        { user ?
-                <QueryClientProvider client={queryClient}>
-                    <Navbar setSearchQuery={setSearchQuery} user={user} setUser={setUser} />
-                    <div className=''>
-                        <Routes>
-                            <Route path='/' element={<CoinTable searchQuery={searchQuery} />} />
-                            <Route path='/:coinName' element={<CoinPage />}/>
-                            <Route path='/dashboard' element={<Dashboard />} />
-                        </Routes>
-                    </div>
-                </QueryClientProvider>
-            :
-            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-                <AuthPage setUser={setUser} />
-            </GoogleOAuthProvider>
-        }
-    </div>
-  )
+    return (
+        <div className='bg-gray-900 text-white min-h-screen'>
+            { user ?
+                    <QueryClientProvider client={queryClient}>
+                        <Navbar setSearchQuery={setSearchQuery} user={user} setUser={setUser} />
+                        <div className=''>
+                            <Routes>
+                                <Route path='/' element={<CoinTable searchQuery={searchQuery} />} />
+                                <Route path='/:coinName' element={<CoinPage />}/>
+                                <Route path='/dashboard' element={<Dashboard />} />
+                            </Routes>
+                        </div>
+                    </QueryClientProvider>
+                :
+                <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+                    <AuthPage setUser={setUser} />
+                </GoogleOAuthProvider>
+            }
+        </div>
+    )
 }
 
 export default App

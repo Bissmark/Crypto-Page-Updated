@@ -39,7 +39,7 @@ const SignUpForm = ({ setUser, showSignup, setShowSignup }) => {
 
     return (
         <IconContext.Provider value={{ color: "white", size: "2.5em" }}>
-            <div className='flex justify-center items-center'>
+            <div className='flex justify-center items-center h-screen'>
                 <div className='w-fit bg-gray-500 p-5 rounded-lg shadow text-center'>
                     <h1 className='my-4 text-5xl font-extrabold dark:text-white'>{showSignup ? 'Sign Up Page' : 'Log In Page'}</h1>
                     <form autoComplete="off" onSubmit={handleSubmit}>

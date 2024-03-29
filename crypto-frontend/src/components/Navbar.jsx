@@ -23,7 +23,7 @@ const Navbar = ({ setSearchQuery, user, setUser }) => {
                 { user ?
                     <div>
                         <Link to="/dashboard"><CgProfile className="text-blue-500 hover:text-white" size={30} /></Link>
-                        <Link onClick={googleLogout()}>Logout</Link>
+                        <Link onClick={handleLogOut}>Logout</Link>
                     </div>
                     :
                     <Link to="/login"><CgProfile className="text-blue-500 hover:text-white" size={30} /></Link>
