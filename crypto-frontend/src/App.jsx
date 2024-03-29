@@ -62,10 +62,10 @@ function App() {
 //   }, []); // Empty dependency array ensures useEffect runs only once on component mount
 
   return (
-    <div className='bg-gray-900 text-white max-h-full h-screen'>
+    <div className='bg-gray-900 text-white max-h-full h-full'>
         { user ?
             <QueryClientProvider client={queryClient}>
-                <Navbar setSearchQuery={setSearchQuery} setUser={setUser} />
+                <Navbar setSearchQuery={setSearchQuery} user={user} setUser={setUser} />
                 <Routes>
                     <Route path='/' element={<CoinTable searchQuery={searchQuery} />} />
                     <Route path='/:coinName' element={<CoinPage />}/>
