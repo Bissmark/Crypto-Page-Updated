@@ -1,10 +1,14 @@
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
+const session = require('express-session');
 const cors = require('cors');
+const mongoStore = require('connect-mongo');
+const passport = require('passport');
 
 require('dotenv').config();
 require('./config/database');
+require('./config/passport');
 
 const app = express();
 const corsOpts = {
@@ -17,6 +21,22 @@ const corsOpts = {
 app.use(cors(corsOpts));
 
 app.use(express.static(path.join(__dirname, 'build')));
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: mongoStore.create({ 
+        mongoUrl: process.env.DATABASE_URL 
+    })
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function (req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
 
 app.use(logger('dev'));
 app.use(express.json());

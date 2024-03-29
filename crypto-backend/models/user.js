@@ -5,26 +5,34 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 6;
 
 const userSchema = new Schema({
-  name: {type: String, required: true},
-  email: {
-    type: String,
-    unique: true,
-    trim: true,
-    lowercase: true,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  }
-}, {
-  timestamps: true,
-  toJSON: {
-    transform: function(doc, ret) {
-      delete ret.password;
-      return ret;
+    name: {type: String, required: true},
+    googleId: {
+        type: String,
+        required: false
+    },
+    email: {
+        type: String,
+        unique: true,
+        trim: true,
+        lowercase: true,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    avatar: {
+        type: String,
+        default: 'https://www.gravatar.com/avatar/'
     }
-  }
+}, {
+    timestamps: true,
+    toJSON: {
+        transform: function(doc, ret) {
+        delete ret.password;
+        return ret;
+        }
+    }
 });
 
 userSchema.pre('save', async function(next) {
