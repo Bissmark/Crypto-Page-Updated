@@ -6,7 +6,6 @@ const addFavorite = async (req, res) => {
     try {
         const user = await User.findById(req.body.userId);
         user.favourites.push(req.body.coinName);
-        console.log(user);
         await user.save();
         res.json(user);
     } catch (error) {
