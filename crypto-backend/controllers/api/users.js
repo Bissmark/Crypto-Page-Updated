@@ -14,6 +14,28 @@ const addFavorite = async (req, res) => {
     }
 }
 
+const getFavourites = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        res.json(user.favourites);
+    } catch (error) {
+        console.error('Error fetching favourites:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+const removeFavourite = async (req, res) => {
+    try {
+        const user = await User.findById(req.body.userId);
+        user.favourites = user.favourites.filter(favourite => favourite !== req.body.coinName);
+        await user.save();
+        res.json(user);
+    } catch (error) {
+        console.error('Error removing favourite:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
 function checkToken(req, res) {
   res.json(req.exp);
 };
@@ -55,8 +77,10 @@ function createJWT(user) {
 };
 
 module.exports = {
-    addFavorite,
     create,
     login,
     checkToken,
+    addFavorite,
+    getFavourites,
+    removeFavourite
 };

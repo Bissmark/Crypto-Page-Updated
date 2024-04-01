@@ -16,3 +16,11 @@ export async function checkToken() {
 export async function addFavourite(coinName, userId) {
     return sendRequest(`${BASE_URL}/addFavourite`, 'POST', { coinName, userId });
 }
+
+export async function getUserFavourites(userId) {
+    return sendRequest(`${BASE_URL}/favourites/${userId}`);
+}
+
+export async function removeFavourite(coinName, userId) {
+    return sendRequest(`${BASE_URL}/removeFavourite`, 'POST', { coinName, userId });
+}

@@ -7,9 +7,9 @@ import { FaArrowDownLong } from "react-icons/fa6";
 import { FaArrowUpLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { addFavourite } from "../services/users-api";
+import { addFavourite, getUserFavourites, removeFavourite } from "../services/users-api";
 
-const CoinTable = ({ searchQuery, user }) => {
+const CoinTable = ({ searchQuery, user, userFavouriteCoins, setUserFavouriteCoins, fetchUserFavourites }) => {
     const [activeStates, setActiveStates] = useState({});
     const [coinsData, setCoinsData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -27,9 +27,28 @@ const CoinTable = ({ searchQuery, user }) => {
     const currentItems = coinsData.slice(indexOfFirstItem, indexOfLastItem);
 
     const addToFavourites = async(coinId) => {
+        setUserFavouriteCoins([...userFavouriteCoins, coinId])
         await addFavourite(coinId, user._id);
-        //setUser(...favourite, user);
     }
+
+    const removeFromFavourites = async(coinId) => {
+        setUserFavouriteCoins(userFavouriteCoins.filter(favourite => favourite !== coinId));
+        await removeFavourite(coinId, user._id);
+    }
+
+    useEffect(() => {
+        // Fetch user favorites when user is available
+        if (user) {
+            fetchUserFavourites().then(favorites => {
+                setActiveStates(
+                    favorites.reduce((acc, coinId) => {
+                        acc[coinId] = true; // Mark favorite coins as active
+                        return acc;
+                    }, {})
+                );
+            });
+        }
+    }, [user]);
     
     const { isFetching, error, data } = useQuery({
         queryKey: ['coins'],
@@ -133,7 +152,7 @@ const CoinTable = ({ searchQuery, user }) => {
                                     </div>
                                 </div>
                             </th>
-                            <th>
+                            <th>    
                                 Last 7 Days
                             </th>
                         </tr>
@@ -141,12 +160,21 @@ const CoinTable = ({ searchQuery, user }) => {
                     <tbody>
                         { currentItems && currentItems.filter(coin => coin.name.toLowerCase().includes(searchQuery.toLowerCase())).map((coin) => {
                             const priceIncrease = coin.sparkline_in_7d.price[coin.sparkline_in_7d.price.length - 1] > coin.sparkline_in_7d.price[0];
-                            const isActive = activeStates[coin.id];
+                            const isFavourite = userFavouriteCoins.includes(coin.id);
                             
                             return (
                                 <tr key={coin.id}>
-                                    <td onClick={() => setActiveStates({ ...activeStates, [coin.id]: !isActive })}>
-                                        {isActive ? <IoMdStar className="text-yellow-500" /> : <IoIosStarOutline onClick={() => addToFavourites(coin.name)} />}
+                                    <td onClick={() => {
+                                        if (isFavourite) {
+                                            setUserFavouriteCoins(userFavouriteCoins.filter(favourite => favourite !== coin.id));
+                                            removeFromFavourites(coin.id);
+                                        } else {
+                                            setUserFavouriteCoins([...userFavouriteCoins, coin.id]);
+                                            addToFavourites(coin.id);
+                                        }
+                                    }}>
+                                        {isFavourite ? <IoMdStar className="text-yellow-500 text-3xl" /> : <IoIosStarOutline className="text-3xl
+                                        " />}
                                     </td>
                                     <td>{coin.market_cap_rank}</td>
                                     <td className="underline hover:text-blue-500 w-28">
