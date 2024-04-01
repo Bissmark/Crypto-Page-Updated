@@ -3,11 +3,10 @@ const User = require('../../models/user');
 const bcrypt = require('bcrypt');
 
 const addFavorite = async (req, res) => {
-    console.log(req.body);
-    const { coinId, userId } = req.body;
     try {
-        const user = await User.findById(userId);
-        user.favorites.push(coinId);
+        const user = await User.findById(req.body.userId);
+        user.favourites.push(req.body.coinName);
+        console.log(user);
         await user.save();
         res.json(user);
     } catch (error) {

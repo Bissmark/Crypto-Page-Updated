@@ -56,6 +56,7 @@ router.get('/:id', async(req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+router.post('/addFavourite', usersController.addFavorite);
 
 router.post('/coins', coinsController.create);
 

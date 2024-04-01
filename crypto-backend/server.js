@@ -13,10 +13,7 @@ require('./config/passport');
 const app = express();
 const corsOpts = {
     origin: '*',
-    credentials: true,
-    methods: ['GET','POST','HEAD','PUT','PATCH','DELETE'],
-    allowedHeaders: ['Content-Type'],
-    exposedHeaders: ['Content-Type']
+    credentials: true
 };
 app.use(cors(corsOpts));
 

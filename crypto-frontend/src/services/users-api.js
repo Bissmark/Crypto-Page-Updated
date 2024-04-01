@@ -14,5 +14,5 @@ export async function checkToken() {
 }
 
 export async function addFavourite(coinName, userId) {
-    return sendRequest(`${BASE_URL}/addFavorite`, 'POST', { coinName, userId });
+    return sendRequest(`${BASE_URL}/addFavourite`, 'POST', { coinName, userId });
 }

@@ -25,7 +25,7 @@ const userSchema = new Schema({
         type: String,
         default: 'https://www.gravatar.com/avatar/'
     },
-    favorites: [String]
+    favourites: [String]
 }, {
     timestamps: true,
     toJSON: {

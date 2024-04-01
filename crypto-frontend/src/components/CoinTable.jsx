@@ -7,9 +7,9 @@ import { FaArrowDownLong } from "react-icons/fa6";
 import { FaArrowUpLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { addFavourite } from "../services/users-service";
+import { addFavourite } from "../services/users-api";
 
-const CoinTable = ({ searchQuery, setUser, user }) => {
+const CoinTable = ({ searchQuery, user }) => {
     const [activeStates, setActiveStates] = useState({});
     const [coinsData, setCoinsData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);

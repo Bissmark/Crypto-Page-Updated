@@ -8,3 +8,7 @@ export function createCoin(coinData) {
 export function getAllCoins() {
     return sendRequest(BASE_URL);
 }
+
+export async function addFavourite(coinName, userId) {
+    return sendRequest(`${BASE_URL}/addFavourite`, 'POST', { coinName, userId });
+}
