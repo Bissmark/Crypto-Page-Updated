@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { getUserFavourites } from "../services/users-api";
+import { removeFavourite } from "../services/users-api";
 import { useQuery } from "@tanstack/react-query";
 
-const Dashboard = ({ user, fetchUserFavourites }) => {
+const Dashboard = ({ user, fetchUserFavourites, userFavouriteCoins, setUserFavouriteCoins }) => {
     const [favouriteCoins, setFavouriteCoins] = useState([]);
 
     const { isFetching, error, data } = useQuery({
@@ -15,6 +15,12 @@ const Dashboard = ({ user, fetchUserFavourites }) => {
             return response.json();
         }
     });
+
+    const removeFromFavourites = async(coinId) => {
+        setUserFavouriteCoins(userFavouriteCoins.filter(favourite => favourite !== coinId));
+        setFavouriteCoins(favouriteCoins.filter(coin => coin.id !== coinId));
+        await removeFavourite(coinId, user._id);
+    }
 
     useEffect(() => {
         if (data) {
@@ -64,7 +70,7 @@ const Dashboard = ({ user, fetchUserFavourites }) => {
                         <input type="number" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2 mb-2" placeholder="0" required />                        
                     <div className="flex justify-evenly">
                             <button className="bg-blue-500 text-white rounded-lg p-2 mt-2">Submit</button>
-                            <button className="bg-red-500 text-white rounded-lg p-2 mt-2">Delete Coin</button>
+                            <button className="bg-red-500 text-white rounded-lg p-2 mt-2" onClick={() => removeFromFavourites(coin.id)}>Delete Coin</button>
                         </div>
                     </div>
                 ))}

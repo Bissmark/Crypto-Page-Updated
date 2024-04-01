@@ -7,7 +7,7 @@ import { FaArrowDownLong } from "react-icons/fa6";
 import { FaArrowUpLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { addFavourite, getUserFavourites, removeFavourite } from "../services/users-api";
+import { addFavourite, removeFavourite } from "../services/users-api";
 
 const CoinTable = ({ searchQuery, user, userFavouriteCoins, setUserFavouriteCoins, fetchUserFavourites }) => {
     const [activeStates, setActiveStates] = useState({});

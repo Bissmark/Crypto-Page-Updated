@@ -38,7 +38,7 @@ function App() {
                             <Routes>
                                 <Route path='/' element={<CoinTable searchQuery={searchQuery} setUser={setUser} user={user} userFavouriteCoins={userFavouriteCoins} setUserFavouriteCoins={setUserFavouriteCoins} fetchUserFavourites={fetchUserFavourites} />} />
                                 <Route path='/:coinName' element={<CoinPage />}/>
-                                <Route path='/dashboard' element={<Dashboard user={user} setUserFavouriteCoins={setUserFavouriteCoins} userFavouriteCoins={userFavouriteCoins} fetchUserFavourites={fetchUserFavourites} />} />
+                                <Route path='/dashboard' element={<Dashboard user={user} fetchUserFavourites={fetchUserFavourites} userFavouriteCoins={userFavouriteCoins} setUserFavouriteCoins={setUserFavouriteCoins} />} />
                             </Routes>
                         </div>
                     </QueryClientProvider>
