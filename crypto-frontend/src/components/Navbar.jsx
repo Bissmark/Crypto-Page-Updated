@@ -36,7 +36,7 @@ const Navbar = ({ setSearchQuery, user, setUser }) => {
                             {openNav && (
                                 <div className="absolute right-0 mt-3 w-48 bg-gray-900 rounded-lg shadow-lg border border-gray-200">
                                     <ul className="py-2">
-                                        <li><Link to="/dashboard" className="block px-4 py-2 text-white hover:text-blue-700">Dashboard</Link></li>
+                                        <li><Link to="/dashboard" onClick={handleDropDown} className="block px-4 py-2 text-white hover:text-blue-700">Dashboard</Link></li>
                                         <li><Link onClick={handleLogOut} className="block px-4 py-2 text-white hover:text-blue-700">Logout</Link></li>
                                     </ul>
                                 </div>
