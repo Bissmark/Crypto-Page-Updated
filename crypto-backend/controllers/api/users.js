@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/user');
 const bcrypt = require('bcrypt');
 
-const addFavorite = async (req, res) => {
+const addFavourite = async (req, res) => {
     try {
         const user = await User.findById(req.body.userId);
         user.favourites.push(req.body.coinName);
@@ -80,7 +80,7 @@ module.exports = {
     create,
     login,
     checkToken,
-    addFavorite,
+    addFavourite,
     getFavourites,
     removeFavourite
 };

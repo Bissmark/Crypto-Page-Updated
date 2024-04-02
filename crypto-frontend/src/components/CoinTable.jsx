@@ -103,7 +103,7 @@ const CoinTable = ({ searchQuery, user, userFavouriteCoins, setUserFavouriteCoin
                 <table className="border text-center">
                     <thead className="border">
                         <tr>
-                            <th><IoIosStarOutline /></th>
+                            <th><IoIosStarOutline className="text-2xl" /></th>
                             <th>
                                 <div className="flex items-center">
                                     <span className="mr-3">Rank</span>
@@ -173,8 +173,7 @@ const CoinTable = ({ searchQuery, user, userFavouriteCoins, setUserFavouriteCoin
                                             addToFavourites(coin.id);
                                         }
                                     }}>
-                                        {isFavourite ? <IoMdStar className="text-yellow-500 text-3xl" /> : <IoIosStarOutline className="text-3xl
-                                        " />}
+                                        {isFavourite ? <IoMdStar className="text-yellow-500 text-2xl" /> : <IoIosStarOutline className="text-2xl" />}
                                     </td>
                                     <td>{coin.market_cap_rank}</td>
                                     <td className="underline hover:text-blue-500 w-28">

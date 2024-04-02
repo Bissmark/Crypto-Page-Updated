@@ -5,7 +5,7 @@ const ensureLoggedIn = require('../config/ensureLoggedIn');
 
 router.post('/', usersController.create);
 router.post('/login', usersController.login);
-router.post('/addFavourite', usersController.addFavorite);
+router.post('/addFavourite', usersController.addFavourite);
 router.post('/removeFavourite', usersController.removeFavourite);
 router.get('/favourites/:userId', usersController.getFavourites);
 
