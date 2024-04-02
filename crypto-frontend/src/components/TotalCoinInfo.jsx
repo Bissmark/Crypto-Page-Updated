@@ -19,7 +19,7 @@ const TotalCoinInfo = () => {
 
     return (
         <div>
-            <ul className="hidden md:flex md:flex-row">
+            <ul className="hidden xl:flex xl:flex-row">
                 <li className="text-blue-600 mr-4 text-xs">Amount of Coins: <span className="text-white">{data.data.active_cryptocurrencies}</span></li>
                 <li className="text-blue-600 mr-4 text-xs">Total Market Cap: <span className="text-white">${data.data.total_market_cap.usd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></li>
                 <li className="text-blue-600 text-xs">Total 24hr Volume: <span className="text-white">{data.data.total_volume.usd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></li>
