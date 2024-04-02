@@ -4,9 +4,11 @@ import { useParams } from "react-router-dom";
 import { Tooltip, YAxis, AreaChart, Area, CartesianGrid } from "recharts";
 import moment from 'moment';
 import { useQuery } from "@tanstack/react-query"
+import { useMediaQuery } from "react-responsive";
 
 const CoinPage = () => {
     const params = useParams();
+    const isBigScreen = useMediaQuery({ query: '(min-width: 600px)'});
 
     const { isPending, error, data } = useQuery({
         queryKey: ['coin', params.coinName],
@@ -28,14 +30,14 @@ const CoinPage = () => {
     const priceIncrease = max > min ? true : false;
     
     return (
-        <div className="flex justify-center mt-8 text-xl">
+        <div className="md:flex justify-center mt-8 text-xl">
             {data && 
                 <div>
                     <div className="flex items-center justify-center">
                         <h1 className="text-center text-3xl mr-2">{data.name}</h1>
                         <img src={ data.image.thumb} alt={ data.name } />
                     </div>
-                    <div className="flex justify-evenly mt-8 mb-8 leading-10">
+                    <div className="md:flex md:justify-evenly mt-8 mb-10 leading-10">
                         <div className="mr-8">
                             <p className="text-blue-500">Rank: <span className="text-white">{data.market_cap_rank}</span></p>
                             <p className="text-blue-500">Current Price: <span className="text-white">${data.market_data.current_price.usd.toLocaleString()}</span></p>
@@ -56,10 +58,10 @@ const CoinPage = () => {
                             <p className="text-blue-500">All-Time Low Data: <span className="text-white">{moment(data.market_data.atl_date.usd).format('Do MMM YY')}</span></p>
                         </div>
                     </div>
-                    <AreaChart width={960} height={300} data={data.market_data.sparkline_7d.price.map(value => ({ price: value.toFixed(5) }))}>
+                    <AreaChart width={ isBigScreen ? 960 : 340} height={ isBigScreen ? 300 : 200} data={data.market_data.sparkline_7d.price.map(value => ({ price: value.toFixed(5) }))}>
                         <Area type="monotone" dataKey="price" stroke={priceIncrease ? "#82ca9d" : "red"} fill={priceIncrease ? "#82ca9d" : "red"} dot={false} />
                         <Tooltip content={ <CustomTooltip />} cursor={ false } wrapperStyle={{ outline: 'none' }} />
-                        <YAxis style={{fontSize: '15px'}} width={80} type="number" tickFormatter={(value) => value.toFixed(2)} domain={['dataMin', 'auto']} />
+                        <YAxis style={ isBigScreen ? {fontSize: '15px'} : {fontSize: '10px'}} width={80} type="number" tickFormatter={(value) => value.toFixed(2)} domain={['dataMin', 'auto']} />
                         <CartesianGrid stroke="#000" strokeDasharray="5 5" />
                     </AreaChart> 
                 </div>

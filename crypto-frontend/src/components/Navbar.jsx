@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import TotalCoinInfo from "./TotalCoinInfo";
 import SearchBar from "./SearchBar";
 import * as userService from '../services/users-service';
@@ -9,9 +9,27 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ setSearchQuery, user, setUser }) => {
     const [openNav, setOpenNav] = useState(false);
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setOpenNav(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const handleDropDown = () => {
         setOpenNav(!openNav);
+    };
+
+    const handleLinkClick = () => {
+        setOpenNav(false); // Close the dropdown when a link is clicked
     };
 
     function handleLogOut() {
@@ -31,7 +49,7 @@ const Navbar = ({ setSearchQuery, user, setUser }) => {
                     <Link to="/" className="mr-6"><FaHome className="text-blue-500 hover:text-white" size={30} /></Link>
                     <MdDarkMode className="text-blue-500 hover:text-white mr-6" size={30} />
                     {user ? (
-                        <div className="relative">
+                        <div className="relative" ref={dropdownRef}>
                             <CgProfile className="text-blue-500 hover:text-white cursor-pointer" size={30} onClick={handleDropDown} />
                             {openNav && (
                                 <div className="absolute right-0 mt-3 w-48 bg-gray-900 rounded-lg shadow-lg border border-gray-200">
@@ -49,8 +67,15 @@ const Navbar = ({ setSearchQuery, user, setUser }) => {
                 { user &&
                     <div className={`w-80 flex justify-center ml-1 sm:hidden ${openNav ? 'block' : 'hidden'}`}>
                         <ul className="w-full flex flex-col justify-center font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                            <li><Link to="/dashboard" className='py-2 pl-3 pr-4 text-gray-900 rounded md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:text-blue-500 md:dark:hover:bg-transparent' onClick={handleDropDown}>Dashboard</Link></li>
-                            <li><Link onClick={handleLogOut} className='py-2 pl-3 pr-4 text-gray-900 rounded md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:text-blue-500 md:dark:hover:bg-transparent'>Logout</Link></li>
+                            <li>
+                                <Link to="/" className='py-2 pl-3 pr-4 text-gray-900 rounded md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:text-blue-500 md:dark:hover:bg-transparent' onClick={handleDropDown}>Home</Link>
+                            </li>
+                            <li>
+                                <Link to="/dashboard" className='py-2 pl-3 pr-4 text-gray-900 rounded md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:text-blue-500 md:dark:hover:bg-transparent' onClick={handleDropDown}>Dashboard</Link>
+                            </li>
+                            <li>
+                                <Link onClick={handleLogOut} className='py-2 pl-3 pr-4 text-gray-900 rounded md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:text-blue-500 md:dark:hover:bg-transparent'>Logout</Link>
+                            </li>
                         </ul>
                     </div>
                 }

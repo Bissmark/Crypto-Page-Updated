@@ -49,9 +49,9 @@ const Dashboard = ({ user, fetchUserFavourites, userFavouriteCoins, setUserFavou
                 <p>Total Gain / Loss: </p>
                 <p>Percentage Gain / Loss: </p>
             </div>
-            <div className="flex items-center gap-4 mt-6 max-w-fit mb-10">
+            <div className="md:flex items-center gap-4 mt-6 max-w-fit mb-10">
                 {favouriteCoins.map(coin => (
-                    <div key={coin.id} className="text-white bg-gray-700 rounded-lg p-4 leading-8">
+                    <div key={coin.id} className="text-white bg-gray-700 rounded-lg p-4 leading-8 mb-6">
                         <div className="flex items-center">
                             <h1 className="text-blue-500 mr-2">Name: <span className="text-white">{coin.name}</span></h1>
                             <img className="h-6 mr-2" src={ coin.image} alt={ coin.name } />
